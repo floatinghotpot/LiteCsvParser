@@ -117,6 +117,29 @@ namespace LiteCsvParser
 			EmptyLineBehavior = emptyLineBehavior;
 		}
 
+		public static List<List<string>> ReadAll(string path, Encoding encoding) {
+			using (var sr = new StreamReader (path, encoding)) {
+				var cfr = new CsvFileReader(sr);
+				List<List<string>> dataGrid = new List<List<string>>();
+				if(cfr.ReadAll(dataGrid)) return dataGrid;
+			}
+			return null;
+		}
+
+		public bool ReadAll(List<List<string>> dataGrid) {
+			// Verify required argument
+			if (dataGrid == null) {
+				throw new ArgumentNullException ("dataGrid");
+			}
+
+			List<string> row = new List<string>();
+			while (this.ReadRow(row)) {
+				dataGrid.Add( new List<string>( row ) );
+			}
+
+			return true;
+		}
+
 		/// <summary>
 		/// Reads a row of columns from the current CSV file. Returns false if no
 		/// more data could be read because the end of the file was reached.
@@ -292,6 +315,21 @@ namespace LiteCsvParser
 			Writer = new StreamWriter (path);
 		}
 	
+		public static void WriteAll(List<List<string>> dataGrid, string path, Encoding encoding) {
+			using (var sw = new StreamWriter(path, false, encoding)) {
+				var cfw = new CsvFileWriter(sw);
+				foreach(var row in dataGrid) {
+					cfw.WriteRow(row);
+				}
+			}
+		}
+
+		public void WriteAll(List<List<string>> dataGrid) {
+			foreach (List<string> row in dataGrid) {
+				this.WriteRow (row);
+			}
+		}
+
 		/// <summary>
 		/// Writes a row of columns to the current CSV file.
 		/// </summary>
@@ -320,7 +358,7 @@ namespace LiteCsvParser
 				else
 					Writer.Write (QuotedFormat, columns [i].Replace (OneQuote, TwoQuotes));
 			}
-			Writer.WriteLine ();
+			Writer.Write ("\r\n");
 		}
 	
 		// Propagate Dispose to StreamWriter
