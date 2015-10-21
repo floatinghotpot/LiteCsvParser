@@ -37,36 +37,55 @@ using System.Diagnostics;
 
 # Example 
 
-Write CSV:
+Read & write all data grid:
 ```csharp
-	using (var writer = new CsvFileWriter("Test.csv"))
-	{
-		// Write each row of data
-		for (int row = 0; row < 10; row++)
-		{
-			List<string> fields = new List<string>();
-			// TODO: Populate column values for this row
-			for(int j=0; j<5; j++) {
-				fields.Add("" + j);
-			}
+using LiteCsvParser;
 
-			writer.WriteRow(fields);
+List<List<string>> dataGrid = CsvFileReader.ReadAll("test.csv", Encoding.GetEncoding("gbk"));
+
+// TODO: deal with data grid
+foreach(var row in dataGrid) {
+	foreach(var cell in row) {
+		Console.Write("\t\t" + cell);
+	}
+	Console.Write("\n");
+}
+
+CsvFileWriter.WriteAll(dataGrid, "output2.csv", Encoding.GetEncoding("gbk"));
+```
+
+Read row by row:
+```csharp
+	List<string> row = new List<string>();
+	using (var reader = new CsvFileReader("Test.csv"))
+	{
+		while (reader.ReadRow(row))
+		{
+			// TODO: Do something with columns' values
+			foreach(string cell in row) {
+				Console.Write("\t\t" + cell);
+			}
+			Console.Write("\n");
 		}
 	}
 ```
 
-Read CSV:
+
+Write row by row:
 ```csharp
-	List<string> fields = new List<string>();
-	using (var reader = new CsvFileReader("Test.csv"))
+	using (var writer = new CsvFileWriter("Test.csv"))
 	{
-		while (reader.ReadRow(fields))
+		// Write each row of data
+		for (int i = 0; i < 10; i++)
 		{
-			// TODO: Do something with columns' values
-			foreach(string field in fields) {
-				Console.Write("\t" + field);
+			List<string> row = new List<string>();
+			
+			// TODO: Populate column values for this row
+			for(int j=0; j<5; j++) {
+				row.Add("" + j);
 			}
-			Console.Write("\n");
+
+			writer.WriteRow(row);
 		}
 	}
 ```
