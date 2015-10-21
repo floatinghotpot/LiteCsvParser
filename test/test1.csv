@@ -1,0 +1,12 @@
+key,value,type,desc
+a,1,int,
+b,text,string,"multi line text 
+yes"
+c,"""hello""",string,"text, with comma"
+d,,string,"text, with ""quote"""
+e,,string,"text, with \""escape\"""
+f,,string,"multi line text,
+with comma,
+with ""quote"",
+with \""escape\"""
+g,,string,
