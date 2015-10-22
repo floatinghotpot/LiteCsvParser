@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 using System.Diagnostics;
 
-namespace LiteCsvParser
+namespace Mono.CSV
 {
 
 /// <summary>
