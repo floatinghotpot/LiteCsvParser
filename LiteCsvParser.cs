@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 using System.Diagnostics;
 
-namespace Mono.CSV
+namespace Mono.Csv
 {
 
 /// <summary>

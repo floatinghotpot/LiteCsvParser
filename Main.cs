@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 
-using Mono.CSV;
+using Mono.Csv;
 
 namespace LiteCsvParser
 {
