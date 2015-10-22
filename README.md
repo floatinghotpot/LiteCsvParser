@@ -54,7 +54,7 @@ foreach(var row in dataGrid) {
 CsvFileWriter.WriteAll(dataGrid, "output2.csv", Encoding.GetEncoding("gbk"));
 ```
 
-Read row by row:
+Read row by row (if the CSV file is very large):
 ```csharp
 	List<string> row = new List<string>();
 	using (var reader = new CsvFileReader("Test.csv"))
